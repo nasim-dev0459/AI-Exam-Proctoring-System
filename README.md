@@ -46,7 +46,6 @@ Ensure you have **Python 3.8+** installed on your system.
    cd AI-Exam-Proctoring-System
 
 ```
-
 2. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
