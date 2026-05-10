@@ -1,0 +1,4 @@
+exam_logs.db
+static/captures/
+__pycache__/
+venv/

@@ -1,0 +1,171 @@
+//Made with Nasim, BSc in CSE at ADUST 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Exam Proctor - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .video-box { border: 5px solid #2c3e50; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); background-color: #000; overflow: hidden; }
+        .log-box { height: 450px; overflow-y: auto; background: #fff; padding: 15px; border-radius: 5px; }
+        .navbar-brand { font-weight: bold; letter-spacing: 1px; }
+        .card-header { font-weight: bold; }
+        .stat-card { transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
+    </style>
+</head>//Made with Nasim, BSc in CSE at ADUST 
+
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark mb-4 shadow">
+        <div class="container">
+            <a class="navbar-brand" href="#">AI EXAM MONITORING SYSTEM</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card bg-dark text-white shadow stat-card">
+                    <div class="card-body text-center">
+                        <h6 class="text-uppercase small">Total Violations</h6>
+                        <h2 id="stat-total" class="display-6 fw-bold">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-danger text-white shadow stat-card">
+                    <div class="card-body text-center">
+                        <h6 class="text-uppercase small">Phone Detections</h6>
+                        <h2 id="stat-phones" class="display-6 fw-bold">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success text-white shadow stat-card">
+                    <div class="card-body text-center">
+                        <h6 class="text-uppercase small">Monitoring Status</h6>
+                        <h2 class="display-6 fw-bold">ACTIVE</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 text-center">
+                <h4 class="mb-3 text-secondary">Live Proctoring Feed</h4>
+                <div class="video-box mb-4">
+                    <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Live Feed">
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">Monitoring Rules</div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">📵 <b>Mobile Phone:</b> Prohibited</li>
+                            <li class="list-group-item">👥 <b>Multiple Faces:</b> Invalid Activity</li>
+                            <li class="list-group-item">👀 <b>Head Movement:</b> Flagged if suspicious</li>
+                            <li class="list-group-item">🚫 <b>Face Visibility:</b> Keep visible</li>
+                        </ul>
+                        <div class="mt-4 p-3 bg-warning-subtle border border-warning rounded">
+                            <small><b>Notice:</b> System generates voice alerts and saves evidence automatically.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow mb-5">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <span>Violation Log Report (Admin)</span>
+                        <div class="btn-group">
+                            <a href="/export/csv" class="btn btn-sm btn-success">Download CSV</a>
+                            <a href="/export/pdf" class="btn btn-sm btn-danger">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="card-body log-box">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Violation Type</th>
+                                    <th>Evidence</th>
+                                </tr>
+                            </thead>
+                            <tbody id="log-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script> //Made with Nasim, BSc in CSE at ADUST 
+
+        let lastLoggedId = null;
+
+        // Fetch logs and trigger voice alerts
+        function updateLogs() {
+            fetch('/get_logs')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('log-table');
+                    tableBody.innerHTML = ''; 
+
+                    if (data.length > 0) {
+                        let latestLog = data[0]; 
+                        let currentId = latestLog[0];
+                        if (lastLoggedId !== null && currentId > lastLoggedId) {
+                            triggerVoiceAlert(latestLog[2]);
+                        }
+                        lastLoggedId = currentId;
+                    }
+
+                    data.forEach(log => {
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td>${log[1]}</td>
+                                <td class="text-danger fw-bold">${log[2]}</td>
+                                <td><a href="/static/captures/${log[3]}" target="_blank" class="btn btn-sm btn-outline-primary">View Image</a></td>
+                            </tr>`;
+                    });
+                });
+        }
+//Made with Nasim, BSc in CSE at ADUST 
+
+        // Fetch real-time statistics for the cards
+        function updateStats() {
+            fetch('/get_stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('stat-total').innerText = data.total;
+                    document.getElementById('stat-phones').innerText = data.phones;
+                });
+        }
+
+        // Browser Speech Synthesis
+        function triggerVoiceAlert(message) {
+            let speechText = message.replace("CHEATING:", "Warning").replace("ALERT:", "");
+            const utterance = new SpeechSynthesisUtterance(speechText);
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Sync every 3 seconds
+        setInterval(() => {
+            updateLogs();
+            updateStats();
+        }, 3000);
+
+        updateLogs();
+        updateStats();
+    </script>
+</body>
+</html>
+//Made with Nasim, BSc in CSE at ADUST 
