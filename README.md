@@ -43,14 +43,15 @@ Make sure you have Python 3.8+ installed on your system.
    ```bash
    git clone [https://github.com/nasim-dev0459/AI-Exam-Proctoring-System.git](https://github.com/nasim-dev0459/AI-Exam-Proctoring-System.git)
    cd AI-Exam-Proctoring-System
-
+   ---
   - Install dependencies:
   - pip install -r requirements.txt
 
-   
-  - Run the application:
-  - python app.py
-  - Project Structure
+  --- 
+   Run the application:
+   python app.py
+---
+Project Structure
 app.py: Main Flask application.
 
 detector/: Contains logic for face and object detection.
@@ -61,6 +62,6 @@ static/: CSS, JS, and captured violation images.
 
 Project Summary/: Contains demo screenshots, video, and sample reports.
 
-
+---
 Developed by
 MD Nasim Howladar Computer Science and Engineering Student
