@@ -1,6 +1,9 @@
+ন
+
+```markdown
 # 🛡️ AI Exam Proctoring System
 
-A real-time, AI-powered automated invigilation system designed to monitor online exams. This system uses computer vision to detect behavioral violations and generates instant reports to ensure exam integrity.
+A real-time, AI-powered automated invigilation system designed to monitor online exams. This system leverages computer vision to detect behavioral violations and generates instant reports to ensure exam integrity.
 
 ---
 
@@ -15,53 +18,66 @@ Check out the system in action:
 
 ## ✨ Key Features
 - **🤖 Intelligent Face Tracking**: Monitors student's gaze (Looking Left, Right, Up, or Away).
-- **📱 Object Detection**: Detects prohibited items like mobile phones during the session.
-- **👥 Multi-Face Detection**: Flags an alert if more than one person is visible in the frame.
-- **📸 Automatic Evidence Capture**: Automatically saves screenshots of violations with timestamps.
-- **📊 Detailed Reporting**: Admin can download violation logs in both **CSV** and **PDF** formats.
-- **🖥️ Live Dashboard**: A clean, responsive web interface for real-time monitoring.
+- **📱 Object Detection**: Real-time detection of prohibited items like mobile phones.
+- **👥 Multi-Face Detection**: Flags an alert if more than one person is detected in the frame.
+- **📸 Automatic Evidence Capture**: Saves screenshots of violations automatically with precise timestamps.
+- **📊 Detailed Reporting**: Administrators can export violation logs in both **CSV** and **PDF** formats.
+- **🖥️ Live Dashboard**: A clean, responsive web interface for seamless real-time monitoring.
 
 ---
 
 ## 🛠️ Tech Stack
 - **Backend**: Flask (Python)
 - **Computer Vision**: OpenCV
-- **AI Models**: YOLOv8 (Object Detection), MediaPipe/Dlib (Face Analysis)
+- **AI Models**: YOLOv8 (Object Detection), Face Analysis logic
 - **Database**: SQLite3
-- **Reports**: ReportLab (PDF), CSV Module
-- **Frontend**: HTML5, CSS3 (Bootstrap/Custom), JavaScript
+- **Reporting**: ReportLab (PDF), CSV Module
+- **Frontend**: HTML5, CSS3, JavaScript
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-Make sure you have Python 3.8+ installed on your system.
+Ensure you have **Python 3.8+** installed on your system.
 
-### Installation
+### Installation & Usage
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/nasim-dev0459/AI-Exam-Proctoring-System.git](https://github.com/nasim-dev0459/AI-Exam-Proctoring-System.git)
    cd AI-Exam-Proctoring-System
-   ---
-  - Install dependencies:
-  - pip install -r requirements.txt
 
-  --- 
-   Run the application:
-   python app.py
+```
+
+2. **Install dependencies:**
+```bash
+pip install -r requirements.txt
+
+```
+
+
+3. **Run the application:**
+```bash
+python app.py
+
+```
+
+
+4. **Access the Dashboard:** Open your browser and go to `http://127.0.0.1:5000`
+
 ---
-Project Structure
-app.py: Main Flask application.
 
-detector/: Contains logic for face and object detection.
+## 📂 Project Structure
 
-templates/: HTML files for the web interface.
-
-static/: CSS, JS, and captured violation images.
-
-Project Summary/: Contains demo screenshots, video, and sample reports.
+* `app.py`: Main Flask application controller.
+* `detector/`: Contains logic for face monitoring and object detection.
+* `templates/`: HTML structures for the web dashboard.
+* `static/`: Stores CSS, JS, and captured violation snapshots.
+* `Project Summary/`: Contains demo screenshots, videos, and sample reports.
 
 ---
-Developed by
-MD Nasim Howladar Computer Science and Engineering Student
+
+## 👤 Developed by
+
+**MD Nasim Howladar** *Computer Science and Engineering Student* [GitHub Profile](https://github.com/nasim-dev0459)
+
