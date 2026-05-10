@@ -1,6 +1,4 @@
-ন
 
-```markdown
 # 🛡️ AI Exam Proctoring System
 
 A real-time, AI-powered automated invigilation system designed to monitor online exams. This system leverages computer vision to detect behavioral violations and generates instant reports to ensure exam integrity.
